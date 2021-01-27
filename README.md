@@ -20,6 +20,6 @@ Test work
 - lint-staged
 - prettier
 
-### Architect:
+### Architect by:
 
 - [Stanislav Yurchenko](https://github.com/StanislavYurchenko)
