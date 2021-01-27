@@ -11,7 +11,7 @@ function Calculator() {
   const [outputPrev, setOutputPrev] = useState('wrtw');
   const [prevInput, setPrevInput] = useState('');
   const [actualInput, setActualInput] = useState('');
-  const [action, setAction] = useState(' ');
+  const [action, setAction] = useState('');
   const [memory, setMemory] = useState(0);
 
   useEffect(() => {
