@@ -3,8 +3,8 @@ import { OutputStyled, TopBox, BottomBox } from './OutputStyled';
 function Output({ stringMain, stringPrev }) {
   return (
     <OutputStyled>
-      <TopBox>{stringPrev}</TopBox>
-      <BottomBox>{stringMain}</BottomBox>
+      <TopBox fontSize={stringPrev.length}>{stringPrev}</TopBox>
+      <BottomBox fontSize={stringMain.length}>{stringMain}</BottomBox>
     </OutputStyled>
   );
 }

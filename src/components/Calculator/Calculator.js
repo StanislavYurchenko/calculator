@@ -15,16 +15,25 @@ function Calculator() {
   const [memory, setMemory] = useState(0);
 
   useEffect(() => {
-    const output = `${prevInput} ${action} ${actualInput}`;
-
-    setOutputMain(output);
+    setOutputMain(`${prevInput} ${action} ${actualInput}`);
   }, [actualInput, prevInput, action]);
 
-  const onClick = event => {
-    const value = event.currentTarget.name;
+  useEffect(() => {
+    const onKeypress = event => {
+      const value = event.key;
+      eventHandler(value);
+    };
 
+    document.addEventListener('keypress', onKeypress);
+
+    return () => {
+      document.removeEventListener('keypress', onKeypress);
+    };
+  }, []);
+
+  const eventHandler = value => {
     if (/[0-9]/.test(value)) {
-      setActualInput(state => state + value);
+      setActualInput(state => Number.parseFloat(state + value).toString());
       return;
     }
 
@@ -36,56 +45,66 @@ function Calculator() {
     }
 
     if (value === '+/-') {
-      setActualInput(state => state * -1);
+      setActualInput(state => (Number(state) * -1).toString());
       return;
     }
 
-    if (value === '.' && !actualInput.includes('.')) {
-      setActualInput(state => state + value);
+    if (value === '.' && !actualInput.toString().includes('.')) {
+      setActualInput(state => state.toString() + value);
       return;
     }
 
     if (value === 'AC') {
-      if (actualInput.length === 0) {
-        setAction('');
-        setOutputPrev('');
-        return;
-      }
+      setActualInput('');
+      setPrevInput('');
+      setOutputPrev('');
+      setAction('');
+      setOutputMain('');
 
-      setActualInput(state => state.toString().slice(0, -1));
+      // for button "A"
+      // setActualInput(state => state.toString().slice(0, -1));
       return;
     }
 
     if (value === 'mc') {
       setMemory(0);
+      setActualInput('');
       return;
     }
 
     if (value === 'mr') {
-      setActualInput(memory);
+      setActualInput(memory.toString());
+      setMemory(0);
       return;
     }
 
     if (value === 'm-') {
       setMemory(state => state - Number(actualInput));
+      setActualInput('');
       return;
     }
 
     if (value === 'm+') {
       setMemory(state => state + Number(actualInput));
+      setActualInput('');
       return;
     }
 
     if (value === '%') {
-      setActualInput(state => (Number(prevInput) * Number(state)) / 100);
+      setActualInput(state =>
+        ((Number(prevInput) * Number(state)) / 100).toString(),
+      );
       return;
     }
 
-    if (value === '=') {
+    if (value === '=' || value === 'Enter') {
       let result;
+      if (!Number(prevInput) && !action) return;
+
       if (!Number(prevInput)) {
-        setPrevInput(0);
+        setPrevInput('0');
       }
+
       // eval() isn't recommend for safety
       switch (action) {
         case '+':
@@ -101,10 +120,9 @@ function Calculator() {
           break;
 
         case '/':
-          result =
-            actualInput === '0'
-              ? 'impossible'
-              : Number(prevInput) / Number(actualInput);
+          result = actualInput
+            ? Number(prevInput) / Number(actualInput)
+            : 'impossible';
           break;
 
         default:
@@ -112,11 +130,19 @@ function Calculator() {
           break;
       }
 
+      const input =
+        result === 'impossible' ? '' : Number(result.toFixed(6)).toString();
+
       setOutputPrev(outputMain);
-      setActualInput(Number(result.toFixed(6)));
+      setActualInput(input);
       setPrevInput('');
       setAction('');
     }
+  };
+
+  const onClick = event => {
+    const value = event.currentTarget.name;
+    eventHandler(value);
   };
 
   return (

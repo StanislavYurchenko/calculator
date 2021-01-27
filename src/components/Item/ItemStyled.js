@@ -13,6 +13,13 @@ export const ButtonStyled = styled.button`
   color: #ffffff;
   font-size: 24px;
   outline: none;
+  user-select: none;
+  transition: all 0.3s linear;
+
+  :active {
+    color: red;
+    box-shadow: inset 0 0 5px red;
+  }
 
   ${props =>
     css`
@@ -22,7 +29,7 @@ export const ButtonStyled = styled.button`
     props.option.size === 'double' &&
     css`
       width: ${2 * size.toString() + 2 * margin + 'px'};
-    `}
+    `};
 `;
 
 export const ItemStyled = styled.li`
