@@ -7,8 +7,8 @@ import List from '../List/List';
 import { controlOptions } from './controlOptions';
 
 function Calculator() {
-  const [outputMain, setOutputMain] = useState('0');
-  const [outputPrev, setOutputPrev] = useState('wrtw');
+  const [outputMain, setOutputMain] = useState('');
+  const [outputPrev, setOutputPrev] = useState('');
   const [prevInput, setPrevInput] = useState('');
   const [actualInput, setActualInput] = useState('');
   const [action, setAction] = useState('');
