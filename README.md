@@ -1,6 +1,6 @@
 # [CALCULATOR](https://stanislavyurchenko.github.io/calculator/.)
 
-## Goal of the game:
+## Goal of the work:
 
 Test work
 
