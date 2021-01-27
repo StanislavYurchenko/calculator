@@ -49,6 +49,7 @@ function Calculator() {
       if (actualInput.length === 0) {
         setAction('');
         setOutputPrev('');
+        return;
       }
 
       setActualInput(state => state.toString().slice(0, -1));
@@ -56,41 +57,34 @@ function Calculator() {
     }
 
     if (value === 'mc') {
-      console.log('test6');
       setMemory(0);
       return;
     }
 
     if (value === 'mr') {
-      console.log('test7');
       setActualInput(memory);
       return;
     }
 
     if (value === 'm-') {
-      console.log('test8');
       setMemory(state => state - Number(actualInput));
       return;
     }
 
     if (value === 'm+') {
-      console.log('test8');
       setMemory(state => state + Number(actualInput));
       return;
     }
 
     if (value === '%') {
-      console.log('test9');
       setActualInput(state => (Number(prevInput) * Number(state)) / 100);
       return;
     }
 
     if (value === '=') {
-      console.log('test10');
       let result;
       if (!Number(prevInput)) {
         setPrevInput(0);
-        // return;
       }
       // eval() isn't recommend for safety
       switch (action) {
@@ -119,7 +113,6 @@ function Calculator() {
       }
 
       setOutputPrev(outputMain);
-
       setActualInput(Number(result.toFixed(6)));
       setPrevInput('');
       setAction('');
