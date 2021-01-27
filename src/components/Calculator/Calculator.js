@@ -24,13 +24,11 @@ function Calculator() {
     const value = event.currentTarget.name;
 
     if (/[0-9]/.test(value)) {
-      console.log('test1');
       setActualInput(state => state + value);
       return;
     }
 
     if (/^\+$|^-$|^\/$|^\*$/gi.test(value)) {
-      console.log('test2');
       setPrevInput(actualInput);
       setActualInput('');
       setAction(value);
@@ -38,20 +36,20 @@ function Calculator() {
     }
 
     if (value === '+/-') {
-      console.log('test3');
       setActualInput(state => state * -1);
       return;
     }
 
     if (value === '.' && !actualInput.includes('.')) {
-      console.log('test4');
       setActualInput(state => state + value);
       return;
     }
 
     if (value === 'AC') {
-      console.log('test5');
-      if (actualInput.length === 0) return setAction('');
+      if (actualInput.length === 0) {
+        setAction('');
+        setOutputPrev('');
+      }
 
       setActualInput(state => state.toString().slice(0, -1));
       return;
