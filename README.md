@@ -2,7 +2,7 @@
 
 ## Goal of the work:
 
-Test work
+Learnimg work
 
 ### Technologies used:
 
